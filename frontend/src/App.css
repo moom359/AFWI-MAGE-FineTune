@@ -9,7 +9,7 @@ body, html {
 body {
   background-color: black; /* Add this line */
   min-height: 100vh; /* This ensures the black background covers the full height of the viewport */
-  background-image: url('./assets/background.png');
+  background-image: url('./assets/background.jpg');
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
@@ -18,50 +18,65 @@ body {
 }
 
 .App {
-  text-align: center;
-  background-color: black;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  color: white;
 }
 
 .app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20px;
+  padding: 10px 20px;
   background-color: #1a1a1a;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logo-title-container {
   display: flex;
   align-items: center;
-  align-self: flex-start;
-  margin-bottom: 20px;
 }
 
 .logo {
-  height: 80px;
+  height: 40px;
   width: auto;
-  margin-right: 20px;
+  margin-right: 15px;
 }
 
 .title-container {
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Change this line */
 }
 
 .title-container h1 {
   margin: 0;
-  font-size: 24px;
+  font-size: 18px;
+  line-height: 1.2;
+  text-align: left; /* Add this line */
 }
 
 .title-container h2 {
-  margin: 5px 0 0;
-  font-size: 18px;
+  margin: 0;
+  font-size: 14px;
   font-weight: normal;
+  line-height: 1.2;
+  text-align: left; /* Add this line */
 }
 
 .workflow-nav {
   width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 }
 
 .workflow-nav ul {
@@ -69,12 +84,12 @@ body {
   padding: 0;
   margin: 0;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .workflow-nav li {
-  margin: 0 5px;
+  margin: 0 10px;
   display: flex;
   align-items: center;
 }
@@ -85,16 +100,41 @@ body {
   display: flex;
   align-items: center;
   padding: 5px 10px;
+  font-size: 14px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.workflow-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #4fc3f7;
+  transition: width 0.3s ease;
+}
+
+.workflow-nav a:hover::after,
+.workflow-nav a.active::after {
+  width: 100%;
+}
+
+.workflow-nav a:hover,
+.workflow-nav a.active {
+  color: #4fc3f7;
 }
 
 .workflow-nav .MuiSvgIcon-root {
   margin-right: 5px;
+  font-size: 18px;
 }
 
 .arrow {
   color: #4fc3f7;
   margin-left: 5px;
-  font-size: 1.2rem;
+  font-size: 14px;
 }
 
 .workflow-step {
@@ -107,19 +147,21 @@ body {
 }
 
 main {
-  flex-grow: 1;
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding: 20px;
+  width: 90%;
+  margin: 0 auto;
+  overflow-y: auto; /* Add this to enable scrolling for the main content */
 }
 
 .home-container, .upload-container, .extract-container, .review-container {
   background-color: rgba(33, 33, 33, 0.9);
   border-radius: 8px;
   padding: 30px;
-  max-width: 800px;
-  width: 100%;
+  width: 100%;  /* Changed from max-width: 800px to width: 100% */
   margin: 0 auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
@@ -365,4 +407,27 @@ p {
 
 #file-input {
   display: none;
+}
+
+.app-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 14px;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure the footer stays at the bottom */
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
 }

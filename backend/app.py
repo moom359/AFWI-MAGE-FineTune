@@ -1,10 +1,19 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from backend.routes import upload_routes, extraction_routes, review_routes
 import logging
+import os
+import sys
+
+# Add the current directory to sys.path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+import config
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware  # Add this import
+from routes import upload_routes, extraction_routes, review_routes  # Change this line
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+logger.info(f"Current working directory: {os.getcwd()}")
 
 app = FastAPI()
 

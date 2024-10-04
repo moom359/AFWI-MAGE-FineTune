@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Checkbox, IconButton, TextField, Typography } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Checkbox, IconButton, TextField, Typography, Select, MenuItem } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import FolderIcon from '@material-ui/icons/Folder';
 import EditIcon from '@material-ui/icons/Edit';
@@ -9,11 +9,12 @@ import CloseIcon from '@material-ui/icons/Close';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
+import './FileList.css';  // Make sure this import is present
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
-    maxHeight: 'calc(10 * 53px + 56px)', // 10 rows (53px each) + header row (56px)
-    overflow: 'auto',
+    maxHeight: '490px', // Set a fixed height for the table container
+    overflow: 'auto',   // Enable scrolling
   },
   stickyHeader: {
     position: 'sticky',
@@ -21,9 +22,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     zIndex: 1,
   },
+  securitySelect: {
+    minWidth: 120,
+  },
 }));
 
-function FileList({ files, onDelete, selectedFiles, setSelectedFiles, onFolderClick, onRenameFolder, onDeleteFolder, onRenameFile, onMoveFile, currentFolder, onNavigateUp }) {
+function FileList({ files, onDelete, selectedFiles, setSelectedFiles, onFolderClick, onRenameFolder, onDeleteFolder, onRenameFile, onMoveFile, currentFolder, onNavigateUp, onUpdateSecurity }) {
   const classes = useStyles();
   const [editingItem, setEditingItem] = useState(null);
   const [newItemName, setNewItemName] = useState('');
@@ -101,12 +105,19 @@ function FileList({ files, onDelete, selectedFiles, setSelectedFiles, onFolderCl
     setNewItemName('');
   };
 
-  const formatDate = (timestamp) => {
-    const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
-    const day = date.getDate();
-    const month = date.toLocaleString('default', { month: 'long' });
-    const year = date.getFullYear();
-    return `${day} ${month} ${year}`;
+  const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      return 'Invalid Date';
+    }
+    return date.toLocaleString('en-GB', { 
+      day: '2-digit', 
+      month: 'short', 
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   };
 
   const getFileIcon = (fileType) => {
@@ -172,6 +183,11 @@ function FileList({ files, onDelete, selectedFiles, setSelectedFiles, onFolderCl
     }
   };
 
+  const handleSecurityChange = (event, file) => {
+    const newSecurity = event.target.value;
+    onUpdateSecurity(file.name, newSecurity);
+  };
+
   return (
     <Paper>
       <div style={{ padding: '16px', borderBottom: '1px solid rgba(224, 224, 224, 1)' }}>
@@ -206,6 +222,7 @@ function FileList({ files, onDelete, selectedFiles, setSelectedFiles, onFolderCl
                   Upload Date {getSortIcon('uploadDate')}
                 </div>
               </TableCell>
+              <TableCell className={classes.stickyHeader}>Security Classification</TableCell>
               <TableCell className={classes.stickyHeader}>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -215,7 +232,7 @@ function FileList({ files, onDelete, selectedFiles, setSelectedFiles, onFolderCl
                 onDragOver={handleDragOver}
                 onDrop={handleDropToParent}
               >
-                <TableCell colSpan={6}>
+                <TableCell colSpan={7}>
                   <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={onNavigateUp}>
                     <ArrowUpwardIcon fontSize="small" />
                     <span style={{ marginLeft: '5px' }}>Parent Folder</span>
@@ -247,6 +264,20 @@ function FileList({ files, onDelete, selectedFiles, setSelectedFiles, onFolderCl
                   <TableCell>{file.type === 'folder' ? 'Folder' : file.type.toUpperCase()}</TableCell>
                   <TableCell>{file.type === 'folder' ? '-' : formatFileSize(file.size)}</TableCell>
                   <TableCell>{file.type === 'folder' ? '-' : formatDate(file.uploadDate)}</TableCell>
+                  <TableCell>
+                    {file.type !== 'folder' && (
+                      <Select
+                        value={file.securityClassification || 'Unclassified'}
+                        onChange={(e) => handleSecurityChange(e, file)}
+                        className={classes.securitySelect}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <MenuItem value="Unclassified">Unclassified</MenuItem>
+                        <MenuItem value="Secret">Secret</MenuItem>
+                        <MenuItem value="Top Secret">Top Secret</MenuItem>
+                      </Select>
+                    )}
+                  </TableCell>
                   <TableCell>
                     {editingItem && editingItem.name === file.name ? (
                       <div style={{ display: 'flex', alignItems: 'center' }}>

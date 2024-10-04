@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 # Set environment variables for offline mode
 os.environ["TRANSFORMERS_OFFLINE"] = "1"
 os.environ["HF_DATASETS_OFFLINE"] = "1"

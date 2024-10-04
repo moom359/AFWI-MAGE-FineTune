@@ -1,0 +1,88 @@
+.file-list {
+  background-color: #34495e;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.file-list-header {
+  background-color: #2c3e50;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.file-list-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.file-list-table th,
+.file-list-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #2c3e50;
+}
+
+.file-list-table th {
+  background-color: #2c3e50;
+  color: #3498db;
+}
+
+.file-list-table tr:hover {
+  background-color: #2c3e50;
+}
+
+.file-icon {
+  margin-right: 10px;
+}
+
+.folder {
+  cursor: pointer;
+  color: #3498db;
+}
+
+.folder:hover {
+  text-decoration: underline;
+}
+
+.file-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.file-actions button {
+  background-color: transparent;
+  border: none;
+  color: #3498db;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.file-actions button:hover {
+  color: #2980b9;
+}
+
+.parent-folder {
+  cursor: pointer;
+  color: #3498db;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.parent-folder:hover {
+  background-color: #2c3e50;
+}
+
+.parent-folder-icon {
+  margin-right: 10px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin: 0 5px;
+}

@@ -10,11 +10,14 @@ import {
   DialogContent, 
   DialogActions, 
   TextField, 
-  Button 
+  Button,
+  Grid,
+  Paper
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
+import './UploadComponent.css';  // Add this line
 
 function UploadComponent() {
   const [files, setFiles] = useState([]);
@@ -235,103 +238,114 @@ function UploadComponent() {
     }
   };
 
+  const handleUpdateSecurity = async (filename, newSecurity) => {
+    try {
+      await axios.post('http://localhost:8000/api/update-security/', {
+        filename,
+        security_classification: newSecurity
+      });
+      setMessage(`Security classification for ${filename} updated to ${newSecurity}`);
+      
+      // Update local state
+      setUploadedFiles(prevFiles => 
+        prevFiles.map(file => 
+          file.name === filename 
+            ? {...file, securityClassification: newSecurity} 
+            : file
+        )
+      );
+    } catch (error) {
+      console.error('Error updating security classification:', error);
+      setMessage('Error updating security classification. Please try again.');
+    }
+  };
+
   return (
     <div className="upload-container">
-      <h2>Upload Documents</h2>
-      <p>
-        Here you can upload your documents for fine-tuning. Follow these steps:
-      </p>
-      <ol>
-        <li>Drag and drop files into the designated area, or click to select files.</li>
-        <li>You can select multiple PDF, DOCX, or TXT files.</li>
-        <li>Add more files by dropping them in the same area or clicking to select more.</li>
-        <li>Click the "Upload" button to send the files to our server.</li>
-      </ol>
-      <p>
-        Supported file formats: PDF, DOCX, TXT. Maximum file size: 100MB per file.
-      </p>
-      <div {...getRootProps()} className={`dropzone ${isDragActive ? 'active' : ''}`}>
-        <input {...getInputProps()} />
-        {
-          isDragActive ?
-            <p>Drop the files here ...</p> :
-            <p>Drag 'n' drop some files here, or click to select files</p>
-        }
-      </div>
-      {files.length > 0 && (
-        <div>
-          <h4>Selected Files:</h4>
-          <ul>
-            {files.map((file, index) => (
-              <li key={index}>
-                {file.name}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      <button onClick={handleSubmit}>Upload</button>
-      {message && <p className="message">{message}</p>}
-      
-      <div style={{ position: 'relative', marginBottom: '-5px' , marginTop: '25px'}}>
-        <div style={{ 
-          position: 'absolute', 
-          right: 0, 
-          top: 0,
-          display: 'flex'
-        }}>
-          <Tooltip title="Delete Selected">
-            <span>
-              <IconButton
-                onClick={handleBulkDelete}
-                disabled={selectedFiles.length === 0}
-                style={{ 
-                  color: selectedFiles.length === 0 ? 'rgba(0, 0, 0, 0.26)' : '#2196f3',
-                  backgroundColor: 'transparent' 
-                }}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </span>
-          </Tooltip>
-          <Tooltip title="Download Selected">
-            <span>
-              <IconButton
-                onClick={handleBulkDownload}
-                disabled={selectedFiles.length === 0}
-                style={{ 
-                  color: selectedFiles.length === 0 ? 'rgba(0, 0, 0, 0.26)' : '#2196f3',
-                  backgroundColor: 'transparent' 
-                }}
-              >
-                <GetAppIcon />
-              </IconButton>
-            </span>
-          </Tooltip>
-          <Tooltip title="Create Folder">
-            <IconButton
-              onClick={() => setIsCreateFolderDialogOpen(true)}
-              style={{ color: '#2196f3', backgroundColor: 'transparent' }}
-            >
-              <CreateNewFolderIcon />
-            </IconButton>
-          </Tooltip>
-        </div>
-      </div>
-      
-      <FileList
-        files={uploadedFiles}
-        onDelete={deleteUploadedFile}
-        selectedFiles={selectedFiles}
-        setSelectedFiles={setSelectedFiles}
-        onFolderClick={handleFolderClick}
-        onRenameFolder={handleRenameFolder}
-        onDeleteFolder={handleDeleteFolder}
-        onRenameFile={handleRenameFile}
-        onMoveFile={handleMoveFile}
-        currentFolder={currentFolder}
-        onNavigateUp={handleBackClick}
-      />
+      <h2>Upload & Manage Documents</h2>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={5}>
+          <Paper style={{ padding: '20px', marginBottom: '20px' }}>
+            <h3>Instructions</h3>
+            <ol>
+              <li>Drag and drop files or click to select files.</li>
+              <li>You can select multiple PDF, DOCX, or TXT files.</li>
+              <li>Add more files as you need.</li>
+              <li>Click "Upload" to make documents available for extraction.</li>
+            </ol>
+            <p>
+              Supported file formats: PDF, DOCX, TXT. Maximum file size: 100MB per file.
+            </p>
+            <div {...getRootProps()} className={`dropzone ${isDragActive ? 'active' : ''}`}>
+              <input {...getInputProps()} />
+              {
+                isDragActive ?
+                  <p>Drop the files here ...</p> :
+                  <p>Drag 'n' drop some files here, or click to browse for files</p>
+              }
+            </div>
+            {files.length > 0 && (
+              <div>
+                <h4>Selected Files:</h4>
+                <ul>
+                  {files.map((file, index) => (
+                    <li key={index}>
+                      {file.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <Button variant="contained" color="primary" onClick={handleSubmit}>Upload</Button>
+            {message && <p className="message">{message}</p>}
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={7}>
+          <Paper style={{ padding: '20px' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}>
+              <Tooltip title="Delete Selected">
+                <span>
+                  <IconButton
+                    onClick={handleBulkDelete}
+                    disabled={selectedFiles.length === 0}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </span>
+              </Tooltip>
+              <Tooltip title="Download Selected">
+                <span>
+                  <IconButton
+                    onClick={handleBulkDownload}
+                    disabled={selectedFiles.length === 0}
+                  >
+                    <GetAppIcon />
+                  </IconButton>
+                </span>
+              </Tooltip>
+              <Tooltip title="Create Folder">
+                <IconButton onClick={() => setIsCreateFolderDialogOpen(true)}>
+                  <CreateNewFolderIcon />
+                </IconButton>
+              </Tooltip>
+            </div>
+            <FileList
+              files={uploadedFiles}
+              onDelete={deleteUploadedFile}
+              selectedFiles={selectedFiles}
+              setSelectedFiles={setSelectedFiles}
+              onFolderClick={handleFolderClick}
+              onRenameFolder={handleRenameFolder}
+              onDeleteFolder={handleDeleteFolder}
+              onRenameFile={handleRenameFile}
+              onMoveFile={handleMoveFile}
+              currentFolder={currentFolder}
+              onNavigateUp={handleBackClick}
+              onUpdateSecurity={handleUpdateSecurity}
+            />
+          </Paper>
+        </Grid>
+      </Grid>
 
       <Dialog open={isCreateFolderDialogOpen} onClose={() => setIsCreateFolderDialogOpen(false)}>
         <DialogTitle>Create New Folder</DialogTitle>

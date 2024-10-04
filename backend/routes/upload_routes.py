@@ -1,15 +1,22 @@
+import sys
+import os
+
+# Add the parent directory to sys.path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from fastapi import APIRouter, UploadFile, File, HTTPException, Body, Path
 from fastapi.responses import JSONResponse, StreamingResponse
 from pathlib import Path
-from backend.config import UPLOAD_DIR, ALLOWED_EXTENSIONS
-from backend.utils.validators import validate_file_extension
-import os
-import shutil
-from typing import List, Optional
-import logging
-from pydantic import BaseModel
+from utils.validators import validate_file_extension  # Changed this line
+from config import UPLOAD_DIR, ALLOWED_EXTENSIONS
 import zipfile
 from io import BytesIO
+import logging
+import shutil
+from typing import List, Optional
+from pydantic import BaseModel
+from datetime import datetime
+import json
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -29,6 +36,10 @@ class FileRename(BaseModel):
     old_name: str
     new_name: str
     folder: Optional[str] = ""
+
+class SecurityUpdateRequest(BaseModel):
+    filename: str
+    security_classification: str
 
 @router.post("/create_folder/")
 async def create_folder(folder: FolderCreate):
@@ -70,20 +81,29 @@ async def delete_folder(folder_path: str):
 
 @router.get("/files/")
 async def list_files(folder: Optional[str] = ""):
-    folder_path = Path(UPLOAD_DIR) / folder if folder else Path(UPLOAD_DIR)
-    if not folder_path.exists():
+    base_folder = Path(UPLOAD_DIR) / folder if folder else Path(UPLOAD_DIR)
+    if not base_folder.exists():
         raise HTTPException(status_code=404, detail="Folder not found")
     
     files_and_folders = []
-    for item in folder_path.iterdir():
+
+    for item in base_folder.iterdir():
         if item.is_file():
             stats = item.stat()
+            metadata_path = item.with_suffix(item.suffix + '.metadata')
+            security_classification = "Unclassified"
+            if metadata_path.exists():
+                with open(metadata_path, 'r') as f:
+                    metadata = json.load(f)
+                    security_classification = metadata.get("security_classification", "Unclassified")
+            
             files_and_folders.append({
                 "name": item.name,
-                "type": item.suffix.lower()[1:] if item.suffix else "unknown",  # Get file extension without the dot
+                "type": get_file_type(item.name),
                 "size": stats.st_size,
-                "uploadDate": stats.st_mtime,
-                "path": str(item.relative_to(UPLOAD_DIR))
+                "uploadDate": datetime.fromtimestamp(stats.st_mtime).isoformat(),
+                "path": str(item.relative_to(UPLOAD_DIR)),
+                "securityClassification": security_classification
             })
         elif item.is_dir():
             files_and_folders.append({
@@ -91,8 +111,19 @@ async def list_files(folder: Optional[str] = ""):
                 "type": "folder",
                 "path": str(item.relative_to(UPLOAD_DIR))
             })
-    
+
     return files_and_folders
+
+def get_file_type(file_name: str) -> str:
+    extension = Path(file_name).suffix.lower()
+    if extension == '.pdf':
+        return 'PDF'
+    elif extension == '.docx':
+        return 'DOCX'
+    elif extension == '.txt':
+        return 'TXT'
+    else:
+        return 'Unknown'
 
 @router.post("/upload/")
 async def upload_files(file: UploadFile = File(...), folder: Optional[str] = ""):
@@ -212,3 +243,17 @@ async def move_file(request: FileMoveRequest):
     except Exception as e:
         logger.error(f"Error moving file: {str(e)}")
         raise HTTPException(status_code=500, detail=f"An error occurred while moving the file: {str(e)}")
+
+@router.post("/update-security/")
+async def update_security_classification(request: SecurityUpdateRequest):
+    file_path = Path(UPLOAD_DIR) / request.filename
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="File not found")
+    
+    # Update the file's metadata (this is a simplified example)
+    # In a real-world scenario, you might want to use a database instead
+    metadata_path = file_path.with_suffix(file_path.suffix + '.metadata')
+    with open(metadata_path, 'w') as f:
+        json.dump({"security_classification": request.security_classification}, f)
+    
+    return {"message": f"Security classification for {request.filename} updated to {request.security_classification}"}
