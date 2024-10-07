@@ -1,0 +1,163 @@
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  color: #333333;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+  background-color: rgba(255, 255, 255, 0.8); /* Add some transparency */
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.upload-grid {
+  display: flex;
+  gap: 20px;
+  height: 100%;
+}
+
+.upload-left {
+  flex: 1;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  overflow-y: auto;
+}
+
+.upload-right {
+  flex: 2;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
+h2, h3 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.instructions {
+  margin-bottom: 20px;
+  color: #333333;
+}
+
+.instructions ol {
+  padding-left: 20px;
+  color: #333333; /* Ensure list items are visible */
+}
+
+.instructions li {
+  margin-bottom: 10px;
+  color: #333333; /* Ensure list items are visible */
+}
+
+.dropzone {
+  border: 2px dashed #3498db;
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: border-color 0.3s ease;
+  color: #333333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px; /* Ensure minimum height for better visibility */
+}
+
+.dropzone p {
+  margin: 0;
+}
+
+.dropzone.active {
+  border-color: #2ecc71;
+}
+
+.selected-files {
+  margin-top: 20px;
+}
+
+.selected-files ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.selected-files li {
+  margin-bottom: 5px;
+  color: #333333;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+.message {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #34495e;
+  border-radius: 4px;
+  color: #ffffff;
+}
+
+.file-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.file-actions button {
+  margin-left: 10px;
+}
+
+/* Ensure text in Material-UI components is visible */
+.MuiTypography-root {
+  color: #333333;
+}
+
+.MuiListItemText-primary {
+  color: #333333;
+}
+
+.MuiSelect-root {
+  color: #333333;
+}
+
+.MuiTableCell-root {
+  color: #333333;
+}
+
+/* Ensure list items in Material-UI components are visible */
+.MuiList-root .MuiListItem-root {
+  color: #333333;
+}
+
+/* New styles for the upload button */
+.upload-button {
+  width: 80%; /* Adjust this value to make the button wider or narrower */
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Updated styles for the upload button container */
+.upload-button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}

@@ -1,0 +1,249 @@
+.generate-dataset-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 30px; /* Increased top and bottom padding */
+  color: #000000;
+  background-color: rgba(245, 245, 245, 0.9);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  min-height: 57vh; /* Added minimum height */
+  display: flex;
+  flex-direction: column;
+}
+
+.generate-dataset-container .generate-dataset-title.MuiTypography-root {
+  color: #3498db !important;
+  margin-top: 20px !important;
+  margin-bottom: 40px !important; /* Increased bottom margin */
+  text-align: center !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Adjust the Grid container to take up remaining space */
+.generate-dataset-container .MuiGrid-container {
+  flex-grow: 1;
+  align-content: flex-start; /* Align grid items to the top */
+}
+
+.generate-dataset-step {
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribute content evenly */
+}
+
+.generate-dataset-step h3 {
+  color: #3498db;
+  margin-bottom: 15px;
+}
+
+.generate-dataset-step .MuiFormControl-root {
+  margin-top: 15px;
+}
+
+.generate-dataset-step .MuiInputLabel-root,
+.generate-dataset-step .MuiSelect-root {
+  color: #000000;
+}
+
+.generate-dataset-step .MuiInput-underline:before {
+  border-bottom-color: #cccccc;
+}
+
+.generate-dataset-step .MuiInput-underline:hover:not(.Mui-disabled):before {
+  border-bottom-color: #3498db;
+}
+
+.generate-dataset-step .MuiInput-underline:after {
+  border-bottom-color: #3498db;
+}
+
+.generate-dataset-step .MuiTextField-root {
+  margin-top: 15px;
+}
+
+.generate-dataset-step .MuiButton-root {
+  margin-top: 15px;
+}
+
+.generate-dataset-step .MuiFormHelperText-root {
+  margin-top: 5px;
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.generate-dataset-section {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.generate-dataset-section h3 {
+  color: #3498db;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.dataset-preview-container {
+  margin-top: 40px;
+  padding: 0;
+}
+
+.dataset-preview-container .generate-dataset-section {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure table text is visible */
+.MuiTableCell-root {
+  color: #000000 !important;
+}
+
+.MuiTypography-root {
+  color: #000000 !important;
+}
+
+.generate-dataset-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.generate-dataset-input,
+.generate-dataset-select {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.generate-dataset-button {
+  background-color: #3498db;
+  color: #ffffff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: flex-start;
+}
+
+.generate-dataset-button:hover {
+  background-color: #2980b9;
+}
+
+.generate-dataset-message {
+  margin-top: 20px;
+  font-weight: bold;
+  color: #3498db;
+}
+
+.generated-questions {
+  margin-top: 20px;
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.generated-questions ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.generated-questions li {
+  margin-bottom: 10px;
+  color: #000000;
+}
+
+.dataset-list {
+  margin-top: 20px;
+}
+
+.dataset-item {
+  background-color: #f8f9fa;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dataset-name {
+  color: #000000;
+}
+
+.dataset-actions button {
+  margin-left: 10px;
+}
+
+.dataset-name-preview {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+}
+
+.step-instruction {
+  margin-bottom: 15px;
+  color: #555;
+  font-size: 0.9rem;
+  text-align: left; /* Add this line to left-align the text */
+}
+
+.review-datasets-section {
+  margin-top: 20px; /* Reduced from 30px */
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.review-datasets-section h3 {
+  color: #3498db;
+  margin-bottom: 15px;
+}
+
+.review-datasets-section .MuiFormControl-root {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+/* Add this new style to create some space between the grid and the review section */
+.generate-dataset-grid {
+  margin-bottom: 20px;
+}
+
+.preview-table-container {
+  margin-top: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.preview-table-container .MuiTable-root {
+  min-width: 650px;
+}
+
+.preview-table-container .MuiTableCell-root {
+  padding: 8px;
+}
+
+.preview-table-container .MuiTableHead-root .MuiTableCell-root {
+  font-weight: bold;
+  background-color: #f5f5f5;
+}
+
+.csv-preview-container {
+  margin-top: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}

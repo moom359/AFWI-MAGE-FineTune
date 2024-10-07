@@ -1,0 +1,563 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+body, html {
+  font-family: Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-image: url('./assets/background.jpg'); /* Updated path */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #c0c0c0;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+  background-color: #1a1a1a;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-title-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+  margin-right: 15px;
+}
+
+.title-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Change this line */
+}
+
+.title-container h1 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.2;
+  text-align: left; /* Add this line */
+}
+
+.title-container h2 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.2;
+  text-align: left; /* Add this line */
+}
+
+.workflow-nav {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.workflow-nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.workflow-nav li {
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+.workflow-nav a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  font-size: 14px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.workflow-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #4fc3f7;
+  transition: width 0.3s ease;
+}
+
+.workflow-nav a:hover::after,
+.workflow-nav a.active::after {
+  width: 100%;
+}
+
+.workflow-nav a:hover,
+.workflow-nav a.active {
+  color: #4fc3f7;
+}
+
+.workflow-nav .MuiSvgIcon-root {
+  color: white;
+}
+
+.arrow {
+  color: #4fc3f7;
+  margin-left: 5px;
+  font-size: 14px;
+}
+
+.workflow-step {
+  display: flex;
+  align-items: center;
+}
+
+.workflow-nav a:hover {
+  color: #4fc3f7;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  width: 90%;
+  margin: 0 auto;
+  overflow-y: auto; /* Add this to enable scrolling for the main content */
+}
+
+.home-container, .upload-container, .extract-container, .review-container {
+  background-color: rgba(33, 33, 33, 0.9);
+  border-radius: 8px;
+  padding: 30px;
+  width: 100%;  /* Changed from max-width: 800px to width: 100% */
+  margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.message {
+  font-weight: bold;
+  margin-top: 20px;
+  color: #4fc3f7;
+}
+
+ol {
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+select, button {
+  margin-right: 10px;
+  background-color: #333333;
+  color: #e0e0e0;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+select:hover, button:hover {
+  background-color: #4fc3f7;
+  color: #212121;
+}
+
+textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  background-color: #424242;
+  color: #e0e0e0;
+  border: 1px solid #555555;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.dropzone {
+  border: 2px dashed #555555;
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: border-color 0.3s ease;
+}
+
+.dropzone.active {
+  border-color: #4fc3f7;
+}
+
+.dropzone p {
+  margin: 0;
+}
+
+h2 {
+  color: #4fc3f7;
+  margin-bottom: 20px;
+}
+
+p {
+  line-height: 1.6;
+}
+
+/* Center h1 and h2, left-align other text */
+.home-container h1,
+.home-container h2,
+.upload-container h2,
+.review-container h2,
+.extract-container h2 {
+  text-align: center;
+}
+
+.home-container p,
+.home-container ul,
+.home-container ol,
+.upload-container p,
+.upload-container ul,
+.upload-container ol,
+.review-container p,
+.review-container ul,
+.review-container ol,
+.extract-container p,
+.extract-container ul,
+.extract-container ol {
+  text-align: left;
+}
+
+/* Adjust list styles */
+.home-container ul,
+.home-container ol,
+.upload-container ul,
+.upload-container ol,
+.review-container ul,
+.review-container ol,
+.extract-container ul,
+.extract-container ol {
+  padding-left: 20px;
+}
+
+.home-container li,
+.upload-container li,
+.review-container li,
+.extract-container li {
+  margin-bottom: 10px;
+}
+
+/* Add some spacing for better readability */
+.home-container section,
+.upload-container section,
+.review-container section,
+.extract-container section {
+  margin-bottom: 30px;
+}
+
+/* Add specific styling for the extract page if needed */
+.extract-container select,
+.extract-container button {
+  margin-top: 10px;
+  
+}
+
+.extract-container .message {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+/* Add these styles to the end of your existing App.css file */
+
+.fine-tune-container,
+.test-container {
+  background-color: rgba(33, 33, 33, 0.9);
+  border-radius: 8px;
+  padding: 30px;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.fine-tune-container h2,
+.test-container h2 {
+  text-align: center;
+  color: #4fc3f7;
+}
+
+.fine-tune-container p,
+.fine-tune-container ol,
+.test-container p,
+.test-container ol {
+  text-align: left;
+}
+
+.file-upload {
+  margin: 20px 0;
+}
+
+.file-label {
+  background-color: #333333;
+  color: #e0e0e0;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.file-label:hover {
+  background-color: #4fc3f7;
+  color: #212121;
+}
+
+.file-name {
+  margin-left: 10px;
+}
+
+.submit-button,
+.send-button {
+  background-color: #4fc3f7;
+  color: #ffffff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover,
+.send-button:hover {
+  background-color: #03a9f4;
+}
+
+.submit-button:disabled,
+.send-button:disabled {
+  background-color: #555555;
+  cursor: not-allowed;
+}
+
+.model-select {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.conversation-area {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #555555;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.message {
+  margin-bottom: 10px;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.message.user {
+  background-color: #2c3e50;
+}
+
+.message.assistant {
+  background-color: #34495e;
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+}
+
+.message-input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #555555;
+  border-radius: 4px;
+  background-color: #424242;
+  color: #e0e0e0;
+}
+
+#file-input {
+  display: none;
+}
+
+.app-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 14px;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure the footer stays at the bottom */
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+/* Add this at the end of the file */
+.MuiTableCell-root {
+  color: #000000 !important;
+}
+
+.MuiSelect-root {
+  color: #000000 !important;
+}
+
+.animated-gradient {
+  background: linear-gradient(
+    -45deg, 
+    rgba(0, 0, 0, 0.7), 
+    rgba(10, 0, 26, 0.7), 
+    rgba(0, 0, 51, 0.7), 
+    rgba(26, 0, 0, 0.7)
+  );
+  background-size: 400% 400%;
+  animation: gradient 30s ease infinite;
+  min-height: 100vh;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Adjust other styles to work with the new background */
+.App {
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  background-color: rgba(0, 0, 0, 0.8); /* Even darker, more opaque header */
+  color: #e0e0e0;
+  padding: 20px;
+}
+
+main {
+  flex: 1;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.03); /* Very slightly transparent white */
+}
+
+.app-footer {
+  background-color: rgba(0, 0, 0, 0.8); /* Even darker, more opaque footer */
+  color: #e0e0e0;
+  padding: 10px;
+}
+
+/* Adjust text colors for better visibility on dark background */
+body {
+  color: #c0c0c0;
+}
+
+h1, h3, h4, h5, h6 {
+  color: #ffffff;
+}
+
+h2 {
+  color: #3498db;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Adjust component backgrounds */
+.home-container, .upload-container, .extract-container, .review-container,
+.fine-tune-container, .test-container {
+  background-color: rgba(245, 245, 245, 0.9); /* Lighter background */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Adjust form elements */
+select, button, textarea, .file-label {
+  background-color: #ffffff;
+  color: #000000;
+  border-color: #cccccc;
+}
+
+select:hover, button:hover, .file-label:hover {
+  background-color: #f0f0f0;
+}
+
+.dropzone {
+  border-color: #444444;
+}
+
+.dropzone.active {
+  border-color: #3a3a3a;
+}
+
+/* Adjust message colors */
+.message {
+  color: #4fc3f7;
+}
+
+/* Adjust table colors */
+.MuiTableCell-root {
+  color: #000000 !important;
+}
+
+.MuiSelect-root {
+  color: #000000 !important;
+}
+
+.MuiTableBody-root .MuiTableRow-root:nth-of-type(odd) {
+  background-color: #f5f5f5;
+}
+
+.MuiTableBody-root .MuiTableRow-root:nth-of-type(even) {
+  background-color: #ffffff;
+}
+
+/* Ensure text in Material-UI components is visible */
+.MuiTypography-root {
+  color: #333333 !important;
+}
+
+.MuiListItemText-primary {
+  color: #333333 !important;
+}
+
+/* ... (rest of the styles remain the same) ... */

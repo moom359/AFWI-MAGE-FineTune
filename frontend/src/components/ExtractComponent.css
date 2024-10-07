@@ -1,0 +1,47 @@
+.extract-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  color: #000000;
+}
+
+.extract-container h2 {
+  color: #3498db;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.extract-section {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.extract-section h3 {
+  color: #3498db;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.csv-preview-container {
+  margin-top: 40px;
+  padding: 0;
+}
+
+.csv-preview-container .extract-section {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure table text is visible */
+.MuiTableCell-root {
+  color: #000000 !important;
+}
+
+.MuiTypography-root {
+  color: #000000 !important;
+}
