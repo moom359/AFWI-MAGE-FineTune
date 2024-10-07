@@ -42,3 +42,45 @@ Thumbs.db
 
 # Keep .gitkeep files
 !/**/.gitkeep
+
+# Ignore specific file types in all directories
+*.csv
+*.docx
+*.txt
+*.gguf
+
+# But don't ignore the directories themselves
+!data/
+!models/
+!data/**/
+!models/**/
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+
+# Ignore environment files
+.env
+venv/
+*.env
+
+# Ignore logs
+*.log
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+
+# Ignore npm dependencies
+node_modules/
+
+# Ignore build outputs
+build/
+dist/
+
+# Ignore any local configuration files
+config.local.js
