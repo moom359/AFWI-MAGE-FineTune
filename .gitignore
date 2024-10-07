@@ -43,6 +43,9 @@ Thumbs.db
 # Keep .gitkeep files
 !/**/.gitkeep
 
+# Include .gitkeep files
+!.gitkeep
+
 # Ignore specific file types in all directories
 *.csv
 *.docx
